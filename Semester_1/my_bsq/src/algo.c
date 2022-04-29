@@ -43,10 +43,13 @@ static bsq_t *get_coord_bsq(bsq_t *bsq)
 
 static bsq_t *research_bsq(bsq_t *bsq)
 {
-    for (; bsq->x + bsq->width < bsq->max_width &&
-    bsq->d_map[bsq->y][bsq->x + bsq->width] != 'o'; bsq->width++);
-    for (; bsq->y + bsq->height < bsq->nb_line &&
-    bsq->d_map[bsq->y + bsq->height][bsq->x] != 'o'; bsq->height++);
+    int tmp1 = bsq->x + bsq->width;
+    int tmp2 = bsq->y + bsq->height;
+
+    for (; tmp1 < bsq->max_width && bsq->d_map[bsq->y][tmp1] != 'o';
+    bsq->width++);
+    for (; tmp2 < bsq->nb_line && bsq->d_map[tmp2][bsq->x] != 'o';
+    bsq->height++);
     bsq->square_size = bsq->height > bsq->width ? bsq->width : bsq->height;
     while (bsq->square_size > 1) {
         bsq = research_bsq_two(bsq);
