@@ -1,0 +1,73 @@
+#!/usr/bin/env python3
+
+import sys
+from transformations import *
+
+base_matrix = Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
+flags = {}
+
+
+if (len(sys.argv) == 2 and sys.argv[1] == '-h'):
+        print("USAGE")
+        print("    ./102architect x y transfo1 arg11 [arg12] [transfo2 arg12 [arg22]] ...\n")
+        print("DESCRIPTION")
+        print("    x abscissa of the original point")
+        print("    y ordinate of the original point\n")
+        print("    transfo arg1 [arg2]")
+        print("    -t i j translation along vector (i, j)")
+        print("    -z m n scaling by factors m (x-axis) and n (y-axis)")
+        print("    -r d rotation centered in O by a d degree angle")
+        print("    -s d reflection over the axis passing through O with an inclination")
+        print("         angle of d degrees")
+        exit(0)
+elif len(sys.argv) < 4:
+        print("Invalid argument")
+        exit(84)
+else:
+        try:
+                float(sys.argv[1])
+                float(sys.argv[2])
+        except:
+                print("Invalid argument")
+                exit(84)
+        point_matrix = Matrix([[float(sys.argv[1])], [float(sys.argv[2])], [1]])
+        for i in range(3, len(sys.argv)):
+                if sys.argv[i][0] == '-' and ord(sys.argv[i][1]) > 57 and len(sys.argv[i]) == 2:
+                        flags[sys.argv[i][1]] = []
+                else:
+                        try:
+                                flags[list(flags.keys())[-1]].append(float(sys.argv[i]))
+                        except:
+                                print("Invalid argument")
+                                exit(84)
+        for key, value in flags.items():
+                if key == 't':
+                        if len(value) == 2:
+                                base_matrix = translation(value[0], value[1]).multiply_by(base_matrix)
+                        else:
+                                print("Invalid argument")
+                                exit(84)
+                elif key == 'z':
+                        if len(value) == 2:
+                                base_matrix = scaling(value[0], value[1]).multiply_by(base_matrix)
+                        else:
+                                print("Invalid argument")
+                                exit(84)
+                elif key == 'r':
+                        if len(value) == 1:
+                                base_matrix = rotation(value[0]).multiply_by(base_matrix)
+                        else:
+                                print("Invalid argument")
+                                exit(84)
+                elif key == 's':
+                        if len(value) == 1:
+                                base_matrix = reflection(value[0]).multiply_by(base_matrix)
+                        else:
+                                print("Invalid argument")
+                                exit(84)
+                else:
+                        print("Invalid argument")
+                        exit(84)
+        result_matrix = base_matrix.multiply_by(point_matrix)
+        print(base_matrix)
+        print("({0:.2f}, {1:.2f}) => ({2:.2f}, {3:.2f})".format(point_matrix.value[0][0], point_matrix.value[1][0], result_matrix.value[0][0], result_matrix.value[1][0]))

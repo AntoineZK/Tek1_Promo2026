@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+
+import sys
+from math import *
+
+
+if (len(sys.argv) == 2 and sys.argv[1] == '-h'):
+        print("USAGE")
+        print("    ./101pong x0 y0 z0 x1 y1 z1 n")
+        print(" ")
+        print("DESCRIPTION")
+        print("    x0 ball abscissa at time t - 1")
+        print("    y0 ball ordinate at time t - 1")
+        print("    z0 ball altitude at time t - 1")
+        print("    x1 ball abscissa at time t")
+        print("    y1 ball ordinate at time t")
+        print("    z1 ball altitude at time t")
+        print("    n  time shift (greater than or equal to zero, integer)")
+        exit(0)
+elif (len(sys.argv) != 8):
+        print("invalid argument")
+        exit(84)
+
+try:
+    x0 = float(sys.argv[1])
+    y0 = float(sys.argv[2])
+    z0 = float(sys.argv[3])
+    x1 = float(sys.argv[4])
+    y1 = float(sys.argv[5])
+    z1 = float(sys.argv[6])
+    n = int(sys.argv[7])
+except:
+    print("invalid argument")
+    exit(84)
+
+if (n < 0):
+        print("invalid argument")
+        exit(84)
+        
+if (x0 == 0.0 and y0 == 0.0 and z0 == 0.0 and x1 == 0.0 and y1 == 0.0 and z1 == 0.0):
+        print("invalid argument")
+        exit(84)
+
+n = int(sys.argv[7])
+
+def main(x0, y0, z0, x1, y1, z1, n):
+        vector_x = x1 - x0
+        vector_y = y1 - y0
+        vector_z = z1 - z0
+        coord_x = ((x1 - x0) * n) + x1
+        coord_y = ((y1 - y0) * n) + y1
+        coord_z = ((z1 - z0) * n) + z1
+        vector_x_2 = "{:.2f}".format(vector_x)
+        vector_y_2 = "{:.2f}".format(vector_y)
+        vector_z_2 = "{:.2f}".format(vector_z)
+        coord_x_2 = "{:.2f}".format(coord_x)
+        coord_y_2 = "{:.2f}".format(coord_y)
+        coord_z_2 = "{:.2f}".format(coord_z)
+        vector_xyz = sqrt(pow(vector_x, 2) + pow(vector_y, 2) + pow(vector_z, 2))
+        if (vector_xyz == 0):
+                incid_angle = 0
+        else :
+                incid_angle = abs(90 - degrees(acos(vector_z / vector_xyz)))
+        incid_angle_2 = "{:.2f}".format(incid_angle)
+                
+        print("The velocity vector of the ball is:")
+        print("("+vector_x_2+",",vector_y_2+",",vector_z_2+")")
+        print("At time t + " + str(n) + ", ball coordinates will be:")
+        print("("+coord_x_2+",",coord_y_2+",",coord_z_2+")")
+        if (coord_z <= 0 and z1 >= 0):
+                print ("The incidence angle is:")
+                print (incid_angle_2,"degrees")
+        else:
+                print ("The ball won't reach the paddle.")
+
+main(x0, y0, z0, x1, y1, z1, n)

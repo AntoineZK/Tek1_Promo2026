@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+
+import sys
+from sphere import sphere
+from cylinder import cylinder
+from cone import cone
+from type import unsigned_int, inf_int
+
+if (len(sys.argv) == 2 and sys.argv[1] == '-h'):
+    print("USAGE")
+    print("    ./104intersection opt xp yp zp xv yv zv p")
+    print(" ")
+    print("DESCRIPTION")
+    print("    opt            surface option: 1 for a sphere, 2 for a cylinder, 3 for a cone")
+    print("    (xp, yp, zp)   coordinates of a point by which the light ray passes through")
+    print("    (xv, yv, zv)   coordinates of a vector parallel to the light ray")
+    print("    p              parameter: radius of the sphere, radius of the cylinder, or")
+    print("                   angle formed by the cone and the Z-axis")
+    exit(0)
+try:
+    arg1 = int(sys.argv[1])
+    arg2 = int(sys.argv[2])
+    arg3 = int(sys.argv[3])
+    arg4 = int(sys.argv[4])
+    arg5 = int(sys.argv[5])
+    arg6 = int(sys.argv[6])
+    arg7 = int(sys.argv[7])
+    arg8 = int(sys.argv[8])
+except:
+    print("Invalid argument")
+    exit(84)
+
+if (unsigned_int(arg8) == 84):
+    print("Invalid argument")
+    exit(84)
+elif (inf_int(arg5) == 84 and inf_int(arg6) == 84 and inf_int(arg7) == 84):
+    print("Invalid argument")
+    exit(84)
+elif (len(sys.argv) == 9 and arg1 == 1):
+    pointx = int(sys.argv[2])
+    pointy = int(sys.argv[3])
+    pointz = int(sys.argv[4])
+    vectorx = int(sys.argv[5])
+    vectory = int(sys.argv[6])
+    vectorz = int(sys.argv[7])
+    radius = int(sys.argv[8])
+    sphere(pointx, pointy, pointz, vectorx, vectory, vectorz, radius)
+elif (len(sys.argv) == 9 and arg1 == 2):
+    pointx = int(sys.argv[2])
+    pointy = int(sys.argv[3])
+    pointz = int(sys.argv[4])
+    vectorx = int(sys.argv[5])
+    vectory = int(sys.argv[6])
+    vectorz = int(sys.argv[7])
+    radius = int(sys.argv[8])
+    cylinder(pointx, pointy, pointz, vectorx, vectory, vectorz, radius)
+elif (len(sys.argv) == 9 and arg1 == 3):
+    pointx = int(sys.argv[2])
+    pointy = int(sys.argv[3])
+    pointz = int(sys.argv[4])
+    vectorx = int(sys.argv[5])
+    vectory = int(sys.argv[6])
+    vectorz = int(sys.argv[7])
+    angle = int(sys.argv[8])
+    if (angle >= 90):
+        print("Invalid angle")
+        exit(84)
+    cone(pointx, pointy, pointz, vectorx, vectory, vectorz, angle)
+else:
+   print("Invalid argument")
+   exit(84)
