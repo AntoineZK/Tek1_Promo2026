@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "general.h": "c",
+        "lk_list.h": "c"
+    }
+}
