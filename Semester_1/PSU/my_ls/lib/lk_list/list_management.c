@@ -8,6 +8,15 @@
 #include "lk_list.h"
 #include "printf.h"
 
+int len_list(lk_list *list)
+{
+    int i = 0;
+
+    for (; list != NULL; list = list->next)
+        i++;
+    return (i);
+}
+
 void print_list(lk_list *list)
 {
     for (; list != NULL; list = list->next)

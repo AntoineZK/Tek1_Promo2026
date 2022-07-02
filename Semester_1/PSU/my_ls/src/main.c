@@ -13,9 +13,12 @@ int main(int ac, char **av)
 
     g = init_struct(g);
     if (ac == 1) {
-        free(g);
-        return (my_ls(av));
-
+        my_ls(av, g);
+    } else {
+        arg_handling(ac, av, g);
+        use_flag(g);
+        free_list(g->list);
     }
+    my_free("ss", g->activated_flag, g);
     return (0);
 }

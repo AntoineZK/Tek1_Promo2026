@@ -20,3 +20,4 @@ lk_list *pop_node_front(lk_list *list);
 lk_list *pop_node_last(lk_list *list);
 void print_list(lk_list *list);
 void free_list(lk_list *list);
+int len_list(lk_list *list);

@@ -3,6 +3,7 @@
         "general.h": "c",
         "my.h": "c",
         "lk_list.h": "c",
-        "printf.h": "c"
+        "printf.h": "c",
+        "dirent.h": "c"
     }
 }
