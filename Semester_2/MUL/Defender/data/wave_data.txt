@@ -1,0 +1,15 @@
+Wave_1 res/goblin_one.png 10 100 100 5 70 100 108
+Wave_2 res/goblin_two.png 10 200 120 5 70 100 108
+Wave_3 res/goblin_three.png 10 300 100 20 70 100 108
+Wave_4 res/goblin_one.png 20 200 100 5 35 100 108
+Wave_5 res/goblin_two.png 12 400 130 15 70 100 108
+Wave_6 res/goblin_three.png 12 500 100 50 70 100 108
+Wave_7 res/goblin_one.png 30 250 100 10 35 100 108
+Wave_8 res/goblin_two.png 15 600 140 20 70 100 108
+Wave_9 res/goblin_three.png 15 700 100 70 70 100 108
+Wave_10 res/goblin_one.png 50 300 100 15 35 100 108
+Wave_11 res/goblin_two.png 20 750 170 25 70 100 108
+Wave_12 res/goblin_three.png 3 1500 100 80 200 100 108
+Wave_13 res/goblin_one.png 10 1000 100 0 80 100 108
+Wave_14 res/goblin_two.png 5 800 300 5 70 100 108
+Wave_15 res/goblin_three.png 1 9999 80 100 70 100 108

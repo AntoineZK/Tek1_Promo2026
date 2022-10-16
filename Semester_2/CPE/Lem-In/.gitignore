@@ -1,0 +1,4 @@
+lib/*.o
+lib/libmy.a
+src/**/*.o
+lem_in

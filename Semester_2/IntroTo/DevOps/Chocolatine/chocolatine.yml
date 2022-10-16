@@ -1,0 +1,64 @@
+name: Chocolatine
+
+on:
+  push:
+    branches-ignore:
+      - "ga-ignore"
+  pull_request:
+    branches-ignore:
+      - "ga-ignore"
+
+env:
+  MIRROR_URL: "git@github.com:EpitechPromo2026/B-DOP-200-NCY-2-1-chocolatine-antoine.khalidy.git"
+  EXECUTABLES: ""
+
+jobs:
+  check_repository_cleanliness:
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          UNWANTED=$(find . -type f -not -path "./.git/*" -wholename "*tmp/*" -or -iname "*pain_au_chocolat*" -or -name "*~" -or -name "*.o" -or -name "*.a" -or -name "*.so" -or -name "*.gcno" -or -name "*.gdca" -or -name "*.gcov")
+          for x in $UNWANTED; do
+            echo "::error file=${x#./},title="Unwanted file detected"::${x#./}"
+          done
+          if [ -n "$UNWANTED" ]; then
+            exit 1
+          fi
+  check_program_compilation:
+    needs: check_repository_cleanliness 
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    steps:
+      - uses: actions/checkout@v3
+      - run: make
+        timeout-minutes: 2
+      - run: make clean
+      - run: |
+          for x in $EXECUTABLES;
+            do
+              ./$x;
+            done
+  run_tests:
+    needs: check_program_compilation
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    steps:
+      - uses: actions/checkout@v3
+      - run: make tests_run
+        timeout-minutes: 2
+  push_to_mirror:
+    needs: run_tests
+    runs-on: ubuntu-latest
+    container: epitechcontent/epitest-docker
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            ${{ env.MIRROR_URL }}
+          ssh_private_key:
+            ${{ secrets.GIT_SSH_PRIVATE_KEY }}

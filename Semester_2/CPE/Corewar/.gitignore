@@ -1,0 +1,12 @@
+asm/asm
+corewar/corewar
+a.out
+*.a
+#*#
+*~
+*.o
+vgcore*
+tags
+asm/*.cor
+asm/*.s
+corewar_binaries

@@ -1,0 +1,86 @@
+version: '3'
+services:
+  poll:
+    build: ./poll
+    links:
+      - redis
+    restart: on-failure
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOSTNAME=redis
+    ports:
+      - 5000:80
+    networks:
+      - poll-tier
+
+  redis:
+    image: "redis:alpine"
+    expose:
+      - "6379"
+    restart: always
+    environment:
+      - POLL_HOSTNAME=poll
+      - WORKER_HOSTNAME=worker
+    networks:
+      - poll-tier
+      - back-tier
+
+  worker:
+    build: ./worker
+    links:
+      - redis
+      - db
+    restart: on-failure
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DB_HOSTNAME=db
+      - REDIS_HOSTNAME=redis
+    networks:
+      - back-tier
+    ports:
+      - 5002:80
+
+  db:
+    image: postgres:9.4
+    ports:
+      - "5433:5432"
+    restart: always
+    networks:
+      - result-tier
+      - back-tier
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - db-data:/usr/share/db
+    environment:
+      - WORKER_HOSTNAME=worker
+      - RESULT_HOSTNAME=result
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+
+  result:
+    build: ./result
+    links:
+      - db
+    restart: on-failure
+    depends_on:
+      - db
+    environment:
+      - DB_HOSTNAME=db
+    networks:
+      - result-tier
+    ports:
+      - 5001:80
+
+volumes:
+  db-data:
+    driver: local
+networks:
+  poll-tier:
+    driver: bridge
+  result-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge

@@ -1,0 +1,6 @@
+lib/libmy.a
+lib/my/*.o
+src/**/*.o
+my_rpg
+save/*
+.vscode/
