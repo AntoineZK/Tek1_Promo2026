@@ -2,8 +2,10 @@
 
 Voici tous mes projets de ma premiere année a Epitech Nancy
 
-Team 102pong : [github.com](github.com/Venodez)
-Team 103pong : [github.com](github.com/Venodez)
-Team 104pong : [github.com](github.com/Venodez)
+Team 102pong : [Venodez](github.com/Venodez)
+
+Team 103pong : [Venodez](github.com/Venodez)
+
+Team 104pong : [Venodez](github.com/Venodez)
 
 
