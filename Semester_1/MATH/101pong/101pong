@@ -62,7 +62,7 @@ def main(x0, y0, z0, x1, y1, z1, n):
         else :
                 incid_angle = abs(90 - degrees(acos(vector_z / vector_xyz)))
         incid_angle_2 = "{:.2f}".format(incid_angle)
-                
+
         print("The velocity vector of the ball is:")
         print("("+vector_x_2+",",vector_y_2+",",vector_z_2+")")
         print("At time t + " + str(n) + ", ball coordinates will be:")
